@@ -59,10 +59,14 @@ fi
 echo "no vulnerabilities exist"
 
 #running malware test
+docker rm -f test 
 docker run -td --name test $imageName /bin/sh
 
 containerId=$(docker ps --filter "name=test" --format "{{.ID}}")
 docker exec dagda /bin/sh -c "python /opt/app/dagda.py monitor ${containerId} --start"
+
+#simulate attack
+docker exec test /bin/sh -c 'nc -vv -z 127.0.0.1 80'
 
 #monitor container for 60 seconds 
 sleep 60
