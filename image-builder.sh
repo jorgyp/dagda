@@ -1,6 +1,9 @@
 #!/bin/bash
 
 #build and initialize dagda scanner 
+docker build -f Dockerfile -t syagolnikov/dagda:latest .
+docker push syagolnikov/dagda:latest
+
 docker rm -f dagda
 docker rm -f vulndb
 docker-compose build
@@ -17,7 +20,6 @@ dbState=$(docker exec dagda /bin/sh -c "python /opt/app/dagda.py vuln --init_sta
     done
 
     echo  "vulnerability database update complete"
-
 
 docker build -f Dockerfile-mongo -t syagolnikov/mongo:latest .
 docker push syagolnikov/mongo:latest

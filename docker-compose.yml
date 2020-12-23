@@ -1,8 +1,7 @@
 version: '2'
 services:
   dagda:
-    build: .
-    image: 3grander/dagda:0.8.0
+    image: syagolnikov/dagda:latest
     container_name: dagda
     networks:
       - mdb
