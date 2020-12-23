@@ -108,5 +108,5 @@ def get_bid(bugtraq_id):
 
 # Executes the main function called get_bid in a parallel way
 def bid_downloader(first_bid, last_bid):
-    output_list = Parallel(n_jobs=100)(delayed(get_bid)(i) for i in range(first_bid, last_bid + 1))
+    output_list = Parallel(n_jobs=10)(delayed(get_bid)(i) for i in range(first_bid, last_bid + 1))
     return [x for x in output_list if x is not None]
