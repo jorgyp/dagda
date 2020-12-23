@@ -62,8 +62,9 @@ echo "no vulnerabilities exist"
 docker run -td --name test $imageName /bin/sh
 
 containerId=$(docker ps --filter "name=test" --format "{{.ID}}")
-totalVulnerabilies=`docker exec dagda /bin/sh -c "python /opt/app/dagda.py monitor ${containerId} --start"`
+docker exec dagda /bin/sh -c "python /opt/app/dagda.py monitor ${containerId} --start"
 
 #monitor container for 60 seconds 
 sleep 60
-totalVulnerabilies=`docker exec dagda /bin/sh -c "python /opt/app/dagda.py monitor ${containerId} --stop"`
+monitoringResults=`docker exec dagda /bin/sh -c "python /opt/app/dagda.py monitor ${containerId} --stop"`
+echo ${monitoringResults}
