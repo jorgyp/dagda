@@ -1,12 +1,19 @@
 #!/bin/bash
+#bash image-builder.sh syagolnikov
 
-#build and initialize dagda scanner 
-docker build -f Dockerfile -t syagolnikov/dagda:latest .
-docker push syagolnikov/dagda:latest
+if [[ -z $1 ]]; then 
+    echo 'docker repo/folder name missing, exit...'
+    exit 1
+else 
+    FOLDER=$1
+fi
 
 docker rm -f dagda
 docker rm -f vulndb
-docker-compose build
+
+docker build -f Dockerfile -t ${FOLDER}/dagda:latest .
+docker push ${FOLDER}/dagda:latest
+
 docker-compose up -d
 sleep 10
 
@@ -21,7 +28,7 @@ dbState=$(docker exec dagda /bin/sh -c "python /opt/app/dagda.py vuln --init_sta
 
     echo  "vulnerability database update complete"
 
-docker build -f Dockerfile-mongo -t syagolnikov/mongo:latest .
-docker push syagolnikov/mongo:latest
+docker build -f Dockerfile-mongo -t ${FOLDER}/mongo:latest .
+docker push ${FOLDER}/mongo:latest
 docker rm -f dagda
 docker rm -f vulndb

@@ -1,4 +1,4 @@
-FROM mongo:latest as builder
+FROM mongo:latest
 
 COPY db /data/db
 
