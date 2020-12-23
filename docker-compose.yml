@@ -20,7 +20,7 @@ services:
     depends_on:
       - vulndb
   vulndb:
-    image: mongo
+    image: syagolnikov/mongo:latest
     container_name: vulndb
     networks:
       - mdb

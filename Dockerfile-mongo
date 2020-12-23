@@ -1,0 +1,5 @@
+FROM mongo:latest as builder
+
+COPY db /data/db
+
+RUN ls -al /data/db
