@@ -59,5 +59,10 @@ fi
 echo "no vulnerabilities exist"
 
 #running malware test
-docker run -td --name test ${imageName} /bin/sh
-totalVulnerabilies=`docker exec dagda /bin/sh -c "python dagda.py monitor syagolnikov/test --start"`
+docker run -td --name test alpine:latest /bin/sh
+
+containerId=$(docker ps --filter "name=test" --format "{{.ID}}")
+totalVulnerabilies=`docker exec dagda /bin/sh -c "python /opt/app/dagda.py monitor c42643aa061f --start"`
+
+sleep 60
+totalVulnerabilies=`docker exec dagda /bin/sh -c "python /opt/app/dagda.py monitor c42643aa061f --stop"`
